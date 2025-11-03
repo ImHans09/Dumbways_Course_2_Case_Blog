@@ -11,7 +11,7 @@ export const createPost = (req: Request, res: Response) => {
   const { title, content } = req.body;
   const newPostId = posts.length > 0 ? posts[posts.length - 1]?.id : 1;
   const newPost: Post = {
-    id: (typeof newPostId === 'number' && newPostId !== 1) ? newPostId + 1 : 1,
+    id: (typeof newPostId === 'number' && posts.length > 0) ? newPostId + 1 : 1,
     title: title,
     content: content
   };
