@@ -1,5 +1,6 @@
 import express from "express";
 import postRoutes from "../src/routes/post-route.js";
+import userRoutes from "../src/routes/user-route.js";
 
 // Create Express app
 const app = express();
@@ -11,7 +12,7 @@ const port = 3000;
 app.use(express.urlencoded({ extended: false }));
 
 // Use middleware to access API route
-app.use('/api/v1', postRoutes);
+app.use('/api/v1', [postRoutes, userRoutes]);
 
 // Running application
 app.listen(port, () => {
