@@ -33,7 +33,7 @@ export const getPosts = async (req: Request, res: Response) => {
 
     const sortByStr = ((sortBy as string).length === 0) ? 'id' : sortBy as string;
     const posts = await prismaClient.post.findMany({
-      where: filter,
+      where: { categoryId: Number(categoryId) },
       orderBy: {
         [sortByStr]: ((sort as string).length === 0) ? sortMethods[0] : sort as string
       },
