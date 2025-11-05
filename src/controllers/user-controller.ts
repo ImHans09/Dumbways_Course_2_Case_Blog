@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import prismaClient from "../connection/client.js";
+import { prismaClient } from "../prisma/client.js";
 
 // Fetch users data and convert to JSON for reponse
 export const getUsers = async (req: Request, res: Response) => {

@@ -25,6 +25,7 @@ model User {
   createdAt     DateTime  @map(name: "created_at")      @default(now())   @db.Timestamp(4)
   updatedAt     DateTime  @map(name: "updated_at")      @default(now())   @db.Timestamp(4)
   posts         Post[]
+  comments      Comment[]
 }
 
 // Define Post model for posts table in database
@@ -32,10 +33,38 @@ model Post {
   @@map(name: "posts")
 
   id            Int       @id                           @default(autoincrement())
-  authorEmail   String    @map(name: "author_email")    @db.VarChar(300)
+  authorId      Int       @map(name: "author_id")
+  categoryId    Int       @map(name: "category_id")
   title         String    @db.VarChar(300)
   content       String
   createdAt     DateTime  @map(name: "created_at")      @default(now())   @db.Timestamp(4)
   updatedAt     DateTime  @map(name: "updated_at")      @default(now())   @db.Timestamp(4)
-  author        User      @relation(fields: [authorEmail], references: [email])
+  comments      Comment[]
+  author        User      @relation(fields: [authorId], references: [id])
+  category      Category  @relation(fields: [categoryId], references: [id])
+}
+
+// Define Comment model for comments table in database
+model Comment {
+  @@map(name: "comments")
+
+  id            Int       @id                            @default(autoincrement())
+  authorId      Int       @map(name: "author_id")
+  postId        Int       @map(name: "post_id")
+  content       String
+  createdAt     DateTime  @map(name: "created_at")      @default(now())   @db.Timestamp(4)
+  updatedAt     DateTime  @map(name: "updated_at")      @default(now())   @db.Timestamp(4)
+  author        User      @relation(fields: [authorId], references: [id])
+  post          Post      @relation(fields: [postId], references: [id])
+}
+
+// Define Category model for categories table in database
+model Category {
+  @@map(name: "categories")
+
+  id            Int       @id                             @default(autoincrement())
+  name          String    @db.VarChar(100)
+  createdAt     DateTime  @map(name: "created_at")      @default(now())   @db.Timestamp(4)
+  updatedAt     DateTime  @map(name: "updated_at")      @default(now())   @db.Timestamp(4)
+  posts         Post[]
 }
